@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enhanced Tech — Pengembangan Web &amp; Integrasi AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --bg-soft:#111111;
+    --fg:#f5f5f3;
+    --muted:#8f8f8c;
+    --line:rgba(245,245,243,0.14);
+    --line-strong:rgba(245,245,243,0.32);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--fg);
+    font-family:'Inter', -apple-system, sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{
+    max-width:1040px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  a{color:var(--fg); text-decoration:none;}
+  a.link{border-bottom:1px solid var(--line-strong); padding-bottom:2px; transition:border-color .2s ease, opacity .2s ease;}
+  a.link:hover{border-color:var(--fg);}
+  a:focus-visible{outline:2px solid var(--fg); outline-offset:3px;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:10;
+    background:rgba(10,10,10,0.85);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1040px; margin:0 auto; padding:18px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-logo{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600; font-size:0.95rem; letter-spacing:0.02em;
+  }
+  .nav-logo img{width:26px; height:26px; filter:invert(1);}
+  .nav-links{display:flex; gap:28px; font-size:0.85rem; color:var(--muted);}
+  .nav-links a{transition:color .2s ease;}
+  .nav-links a:hover{color:var(--fg);}
+  @media (max-width:600px){ .nav-links{gap:16px; font-size:0.78rem;} }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:110px 0 90px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-eyebrow{
+    font-size:0.8rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:22px;
+  }
+  .hero h1{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:clamp(2.8rem, 8vw, 5.2rem);
+    line-height:1.02;
+    letter-spacing:-0.02em;
+    margin:0 0 24px;
+    text-align:left;
+  }
+  .hero p.lead{
+    max-width:560px;
+    font-size:1.15rem;
+    color:var(--muted);
+    margin:0 0 34px;
+  }
+  .hero-meta{
+    display:flex; gap:40px; flex-wrap:wrap;
+    padding-top:28px;
+    border-top:1px solid var(--line);
+    font-size:0.85rem;
+  }
+  .hero-meta .label{color:var(--muted); display:block; margin-bottom:4px; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase;}
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.is-visible{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1; transform:none; transition:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:90px 0; border-bottom:1px solid var(--line);}
+  .sec-label{
+    font-size:0.78rem; letter-spacing:0.16em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:16px;
+  }
+  .sec-heading{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:clamp(1.7rem, 4vw, 2.4rem);
+    margin:0 0 34px;
+    letter-spacing:-0.01em;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap:60px;
+    align-items:start;
+  }
+  .about-grid p{color:var(--muted); font-size:1.05rem; margin:0 0 18px;}
+  .about-grid strong{color:var(--fg); font-weight:600;}
+  .founder-card{
+    border:1px solid var(--line);
+    padding:26px;
+    position:relative;
+    overflow:hidden;
+  }
+  .founder-card::before{
+    content:"";
+    position:absolute; top:0; right:0;
+    width:0; height:0;
+    border-style:solid;
+    border-width:0 34px 34px 0;
+    border-color:transparent var(--fg) transparent transparent;
+    opacity:0.9;
+  }
+  .founder-card .role{
+    font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted);
+    margin-bottom:8px;
+  }
+  .founder-card .name{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:1.3rem; font-weight:600; margin-bottom:14px;
+  }
+  .founder-card .desc{font-size:0.92rem; color:var(--muted);}
+  @media (max-width:760px){ .about-grid{grid-template-columns:1fr;} }
+
+  /* ---------- WORK ---------- */
+  .work-list{border-top:1px solid var(--line);}
+  .work-item{
+    display:grid;
+    grid-template-columns: 70px 1fr auto;
+    gap:24px;
+    align-items:center;
+    padding:34px 0;
+    border-bottom:1px solid var(--line);
+    transition:padding-left .25s ease, opacity .25s ease;
+  }
+  .work-item:hover{padding-left:14px;}
+  .work-index{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:0.85rem; color:var(--muted);
+  }
+  .work-title{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:1.5rem; font-weight:600; margin:0 0 6px;
+  }
+  .work-desc{color:var(--muted); font-size:0.95rem; margin:0; max-width:52ch;}
+  .work-tag{
+    font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--muted); white-space:nowrap;
+    border:1px solid var(--line-strong);
+    padding:6px 12px;
+  }
+  @media (max-width:640px){
+    .work-item{grid-template-columns:40px 1fr; row-gap:10px;}
+    .work-tag{grid-column:2; justify-self:start;}
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .contact-cell{
+    background:var(--bg);
+    padding:30px 26px;
+  }
+  .contact-cell .label{
+    font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:12px; display:block;
+  }
+  .contact-cell .value{font-size:1.05rem; word-break:break-word;}
+  @media (max-width:700px){ .contact-grid{grid-template-columns:1fr;} }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding:38px 0 60px;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
+    font-size:0.8rem; color:var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo"><img src="et-logo.png" alt="Enhanced Tech"> Enhanced Tech</div>
+    <div class="nav-links">
+      <a href="#tentang">Tentang</a>
+      <a href="#pekerjaan">Pekerjaan</a>
+      <a href="#kontak">Kontak</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <p class="hero-eyebrow reveal">Studio Web &amp; AI · Gowa, Indonesia</p>
+    <h1 class="reveal">Enhanced<br>Tech.</h1>
+    <p class="lead reveal">Kami membangun situs web dan sistem AI yang benar‑benar terintegrasi
+      ke dalam cara kerja penggunanya — dirancang, dikembangkan, dan dijaga langsung oleh
+      satu pengembang penuh tanggung jawab.</p>
+    <div class="hero-meta reveal">
+      <div><span class="label">Didirikan oleh</span>Muh Nabil Fattabarani</div>
+      <div><span class="label">Berbasis di</span>Gowa, Sulawesi Selatan</div>
+      <div><span class="label">Fokus</span>Web Development &amp; AI Integration</div>
+    </div>
+  </section>
+
+  <section id="tentang">
+    <p class="sec-label reveal">Tentang</p>
+    <h2 class="sec-heading reveal">Satu orang, tanggung jawab penuh.</h2>
+    <div class="about-grid">
+      <div class="reveal">
+        <p><strong>Enhanced Tech</strong> adalah studio pengembangan web dan integrasi
+          kecerdasan buatan (AI). Tidak ada tim besar dengan proses berlapis — setiap
+          proyek dirancang, dibangun, dan dipelihara langsung dari awal hingga akhir.</p>
+        <p>Fokus kami sederhana: situs web yang kokoh secara teknis, dan asisten AI yang
+          benar-benar menyatu dengan kebutuhan penggunanya, bukan sekadar fitur tempelan.</p>
+      </div>
+      <div class="founder-card reveal">
+        <div class="role">Founder &amp; Developer</div>
+        <div class="name">Muh Nabil Fattabarani</div>
+        <div class="desc">Membangun seluruh produk Enhanced Tech secara mandiri —
+          dari perancangan sistem, pengembangan web, hingga integrasi AI.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pekerjaan">
+    <p class="sec-label reveal">Pekerjaan</p>
+    <h2 class="sec-heading reveal">Proyek yang sedang berjalan.</h2>
+    <div class="work-list">
+      <div class="work-item reveal">
+        <span class="work-index">01</span>
+        <div>
+          <h3 class="work-title">Biosinc AI</h3>
+          <p class="work-desc">Mesin jawab bertenaga AI yang memberi jawaban ringkas dan
+            langsung ke inti pertanyaan.</p>
+        </div>
+        <span class="work-tag">AI Answer Engine</span>
+      </div>
+      <div class="work-item reveal">
+        <span class="work-index">02</span>
+        <div>
+          <h3 class="work-title">Web SMAN 10 Gowa</h3>
+          <p class="work-desc">Situs resmi sekolah dengan asisten AI internal untuk
+            kebutuhan informasi siswa dan pengunjung.</p>
+        </div>
+        <span class="work-tag">School Website</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontak">
+    <p class="sec-label reveal">Kontak</p>
+    <h2 class="sec-heading reveal">Mari bicarakan proyek Anda.</h2>
+    <div class="contact-grid reveal">
+      <div class="contact-cell">
+        <span class="label">Telepon</span>
+        <span class="value"><a class="link" href="tel:+6285696428268">0856-9642-8268</a></span>
+      </div>
+      <div class="contact-cell">
+        <span class="label">Email</span>
+        <span class="value"><a class="link" href="mailto:enhancedtech.corporation@gmail.com">enhancedtech.corporation@gmail.com</a></span>
+      </div>
+      <div class="contact-cell">
+        <span class="label">Instagram</span>
+        <span class="value"><a class="link" href="https://instagram.com/enhanced_corporation" target="_blank" rel="noopener">@enhanced_corporation</a></span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Enhanced Tech</span>
+    <span>Gowa, Sulawesi Selatan</span>
+  </footer>
+
+</div>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, {threshold:0.15, rootMargin:'0px 0px -40px 0px'});
+    els.forEach(el=>io.observe(el));
+  } else {
+    els.forEach(el=>el.classList.add('is-visible'));
+  }
+</script>
+
+</body>
+</html>
